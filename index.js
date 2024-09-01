@@ -1,6 +1,8 @@
 import dotenv from "dotenv";
 import { app } from "./app.js";
 import connectDB from "./dbConfig/dbConfig.js";
+import { scheduler } from "./helpers/scheduler.js";
+import { fetchAndStorePrice } from "./services/etherprice.services.js";
 
 //load environment variables.
 dotenv.config({
@@ -18,9 +20,14 @@ connectDB()
     app.listen(process.env.PORT || 4500, () => {
         console.log(`Server Is Running on Port: ${process.env.PORT || 2000}`);
     });
+    fetchAndStorePrice();
+    scheduler();
+
 })
 .catch((error) => {
     console.log("Server Connection Failed!", error);
 });
+
+
 
 

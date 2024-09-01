@@ -4,7 +4,6 @@ import { asyncHandler } from "../helpers/asyncHandler.js";
 import { Transactions } from "../models/transactions.model.js";
 import mongoose from "mongoose";
 import axios from "axios";
-import path from "path"; //for path resolving, windows.
 
 const fetchTransactions = asyncHandler( async(req, res) => {
     //the address is passed as a query parameter in the url, and can be accessed from the req.body object.
