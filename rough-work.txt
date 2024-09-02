@@ -33,3 +33,5 @@ https://api.etherscan.io/api
 => Making a scheduler using node cron to schedule this functionality to run every 10 minutes.
 => The price of ethereum will be updated in the database rather than creating new document each time.
 
+//Task 3 logics:
+=>

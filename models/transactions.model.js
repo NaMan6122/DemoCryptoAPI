@@ -14,7 +14,7 @@ const transactionsModel = new mongoose.Schema({
     hash: { //since the hash is unique for every transactuon,
         type: String,
         required: true,
-        unique: true,
+        //unique: true,
     },
 
     nonce: String,
