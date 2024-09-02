@@ -7,11 +7,7 @@ import axios from "axios";
 import { Price } from "../models/etherprice.model.js";
 
 const fetchTransactions = asyncHandler( async(req, res) => {
-    //the address is passed as a query parameter in the url, and can be accessed from the req.body object.
-    //now, since we have the address and the api key, we can form construct the url, and fetch the json data, and also store it in mongoDB.
-    //there will be multiple transactions, stored in a lits, now we can save each transaction separately  with the same address in mongo DB.
-    //we can access these transactions by using the find query in mongoose, to find all documents with the given adddress.
-
+    //fetching the address, which is passed as query params.
     const address = req.query.address;
     const apiKey = process.env.ETHER_API_KEY;
     console.log("address: ", address);
@@ -33,6 +29,7 @@ const fetchTransactions = asyncHandler( async(req, res) => {
             ...currTransaction,
             address,
         }));
+
         //now saving each transaction as a separate document in the DB, using insertMany.
         const savedTransactions = await Transactions.insertMany(transactionArray);
         console.log(savedTransactions);
@@ -45,12 +42,6 @@ const fetchTransactions = asyncHandler( async(req, res) => {
 });
 
 const fetchExpenses = asyncHandler( async(req, res) => {
-    //provided that the user will enter the address as a parameter.
-    //we will use this address to check whether a user exists in the database with this address.
-    //if the user exists, we will fetch all the transactions with the same address, and then calculate the expense for 
-    //each transaction. So for multiple transactions, we will add the expense of each transaction and calculate the total expense.
-    //after this, we have to search for the latest entry of fetched ether price/ or we can just make an api call
-    //for the same to fetch the current ether price as well.
 
     const address = req.params.address;
     //console.log("address: ", address);
@@ -73,12 +64,11 @@ const fetchExpenses = asyncHandler( async(req, res) => {
     }, 0);
 
     //now for the current price of Ethereum.
-    //to fetch the current price of ethereum, just to portray more functionalities using mongoose and mongoDB, 
-    //we can fetch the latest stored ether price from the DB directly instead of making an API call to the coingecko API.
-    const currEtherPrice = Price.findOne().sort({ createdAt : -1 });
+    const currEtherPrice = await Price.findOne().sort({ createdAt : -1 });
+    console.log(currEtherPrice.priceInRupee);
     const resObject = {
         totalExpenses,
-        etherPrice : currEtherPrice.priceInRupee,
+        currEtherPrice : currEtherPrice.priceInRupee,
     }
     return res.status(200).json(new ApiResponse(200, resObject, "User Expenses And Current Ethereum Price Fetched Successfully..!!"));
 });

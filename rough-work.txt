@@ -27,6 +27,12 @@ https://api.etherscan.io/api
 => Assigned a route to to whcih server can listen and respond to the request, with data.
 => Tested the functioning of the API using Postman.
 
+//the address is passed as a query parameter in the url, and can be accessed from the req.body object.
+//now, since we have the address and the api key, we can form construct the url, and fetch the json data, and also store it in mongoDB.
+//there will be multiple transactions, stored in a lits, now we can save each transaction separately  with the same address in mongo DB.
+//we can access these transactions by using the find query in mongoose, to find all documents with the given adddress.
+
+
 //Task 2 logics:
 => Implementing fetch and store functionality as a service.
 => Creating a schema for storing the fetched price in the DB.
@@ -34,4 +40,19 @@ https://api.etherscan.io/api
 => The price of ethereum will be updated in the database rather than creating new document each time.
 
 //Task 3 logics:
-=>
+=> Defining a new controller for handling and functioning of GET API to fetch user expenses and latest ether price.
+=> Using DB queries using mongoose and fetching data.
+=> Returning the computed results as a custom object, in the response.
+
+//provided that the user will enter the address as a parameter.
+//we will use this address to check whether a user exists in the database with this address.
+//if the user exists, we will fetch all the transactions with the same address, and then calculate the expense for 
+//each transaction. So for multiple transactions, we will add the expense of each transaction and calculate the total expense.
+//after this, we have to search for the latest entry of fetched ether price/ or we can just make an api call
+//for the same to fetch the current ether price as well.
+
+//to fetch the current price of ethereum, just to portray more functionalities using mongoose and mongoDB, 
+//we can fetch the latest stored ether price from the DB directly instead of making an API call to the coingecko API.
+
+//Testing API endpoints using Postman: Completed.
+//Checking the Structure of responses, and errors: Completed.

@@ -18,7 +18,7 @@ connectDB()
     });
 
     app.listen(process.env.PORT || 4500, () => {
-        console.log(`Server Is Running on Port: ${process.env.PORT || 2000}`);
+        console.log(`Server Is Running on Port: ${process.env.PORT || 4500}`);
     });
     fetchAndStorePrice();
     scheduler();
